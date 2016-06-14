@@ -28,6 +28,9 @@
 
 		var gotElevator = CTL.floorRequested(5);
 		console.log('sending elevator',gotElevator);
+
+		gotElevator = CTL.updateElevator(gotElevator);
+		console.log('checking updated result', gotElevator);
 	</script>
 	</body>
 </html>

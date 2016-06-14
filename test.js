@@ -69,11 +69,11 @@
 			var ev = total_elevators[i].value;
 			if(ev.occupied === true){
 				if ((ev.destination - ev.floor) > 0) { //going up
-					if (floor > ev.floor && floor < ev.destination) {
+					if (floor >= ev.floor && floor <= ev.destination) {
 						return ev;
 					}
 				} else {  //going down
-					if (floor < ev.floor && floor > ev.destination) {
+					if (floor <= ev.floor && floor >= ev.destination) {
 						return ev;
 					}					
 				}
@@ -92,6 +92,16 @@
 		return false;		
 	}
 
+	CTL.updateElevator = function(ev){
+		for(var i = 0; i < total_elevators.length; i++){
+			if(ev.id == total_elevators[i].key){
+				total_elevators[i].value = ev;
+				total_elevators[i].value.trips += 1;
+				return total_elevators[i].value;
+			}
+		}		
+	}
+	
 	window.CTL = CTL;
 
 }(window, document));
