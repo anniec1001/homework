@@ -14,7 +14,7 @@
 	CTL.elevator = function(){
 		//initializing elevator properties
 		var elevator = {
-			id: generateId(), //assign an unique number for each elevator, assume generateId() will return a uniq id
+			id: generateId(), //assign an unique number for each elevator, pretend generateId() would return a uniq id
 			occupied: false,
 			trips: 0,
 			floor: 1,
@@ -31,48 +31,65 @@
 	}
 
 	var floors_inQueue = [];
-	CTL.floorRequested = function(onFloor){ //TODO: add floor requests in a queue, so we can complete all requests as new person make a request on a floor.
+	//TODO: add floor requests in a queue, so we can complete all requests as new person make a request on a floor.
+	CTL.floorRequested = function(onFloor){ 
 		floors_inQueue.push(onFloor);
-		return findEv(onFloor);
+		return findElevator(onFloor);
 	}
-	
-	function findEv(floor){
+
+	function findElevator(floor){
 		var result_elevator;
 
-		for(var i = 0; i < total_elevators.length; i++){
-			//Priority:			
-			//find if it is unoccupied and on the same floor
-			//find if it is occupied and moving pass this floor
-			//find if it is unoccupied and on a different floor
+		result_elevator = findOnSameFloor(floor);
 
-			var ev = total_elevators[i].value;
-			ev.trips = ev.trips + 1;
-			
-			
-			if (!result_elevator){ 
-				
-				if(ev.occupied === false && ev.floor == floor){
-					result_elevator = ev;
-				}else if (ev.occupied){
-					if ((ev.destination - ev.floor) > 0) { //going up
-						if (floor > ev.floor && floor < ev.destination) {
-							result_elevator = ev;
-						}
-					} else {  //going down
-						if (floor < ev.floor && floor > ev.destination) {
-							result_elevator = ev;
-						}					
-					}
-				}else if (ev.occupied === false){
-					result_elevator = ev;
-				}					
-			}
+		if (!result_elevator){
+			result_elevator = findPassingFloor(floor);
+		}
 
-				
-
+		if (!result_elevator){
+			result_elevator = findDifferentFloor(floor);
 		}
 
 		return result_elevator;
+
+	}
+
+	function findOnSameFloor(floor){
+		for(var i = 0; i < total_elevators.length; i++){
+			var ev = total_elevators[i].value;
+			if(ev.occupied === false && ev.floor == floor){
+				return ev
+			}
+		}
+		return false;
+	}
+
+	function findPassingFloor(floor){
+		for(var i = 0; i < total_elevators.length; i++){
+			var ev = total_elevators[i].value;
+			if(ev.occupied === true){
+				if ((ev.destination - ev.floor) > 0) { //going up
+					if (floor > ev.floor && floor < ev.destination) {
+						return ev;
+					}
+				} else {  //going down
+					if (floor < ev.floor && floor > ev.destination) {
+						return ev;
+					}					
+				}
+			}
+		}
+		return false;		
+	}
+
+	function findDifferentFloor(floor){
+		for(var i = 0; i < total_elevators.length; i++){
+			var ev = total_elevators[i].value;
+			if(ev.occupied === false && ev.floor != floor){
+				return ev
+			}
+		}
+		return false;		
 	}
 
 	window.CTL = CTL;

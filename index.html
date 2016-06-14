@@ -6,9 +6,26 @@
 	</head>
 	<body>
 	<script>
-		var newElevator = new CTL.elevator();
-		console.log('here is the new elevator properties:',newElevator);
-		
+		CTL.maxFloor = 10;
+
+		var ev1 = new CTL.elevator();
+		console.log('here is the new elevator properties:',ev1);
+
+		//adding more elevators
+		var ev2 = new CTL.elevator();
+		ev2.floor = 9;
+		ev2.occupied = true;
+		ev2.destination = 6;
+
+		var ev3 = new CTL.elevator();
+		ev3.floor = 2;
+		ev3.occupied = true;
+		ev3.destination = 5;
+
+		var ev4 = new CTL.elevator();
+		ev4.floor = 2;
+		ev4.occupied = false;
+
 		var gotElevator = CTL.floorRequested(5);
 		console.log('sending elevator',gotElevator);
 	</script>
