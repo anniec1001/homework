@@ -1,0 +1,16 @@
+{
+  "name": "homework",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "author": "Annie",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-watch": "^4.3.5",
+    "gulp-webserver":"^0.9.1"
+  },
+  "dependencies":{
+    "gulp-watch": "^4.3.5",
+    "gulp-webserver":"^0.9.1"    
+  }
+}
