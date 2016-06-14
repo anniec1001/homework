@@ -37,6 +37,42 @@
 	}
 	
 	function findEv(floor){
+		var result_elevator;
+
+		for(var i = 0; i < total_elevators.length; i++){
+			//Priority:			
+			//find if it is unoccupied and on the same floor
+			//find if it is occupied and moving pass this floor
+			//find if it is unoccupied and on a different floor
+
+			var ev = total_elevators[i].value;
+			ev.trips = ev.trips + 1;
+			
+			
+			if (!result_elevator){ 
+				
+				if(ev.occupied === false && ev.floor == floor){
+					result_elevator = ev;
+				}else if (ev.occupied){
+					if ((ev.destination - ev.floor) > 0) { //going up
+						if (floor > ev.floor && floor < ev.destination) {
+							result_elevator = ev;
+						}
+					} else {  //going down
+						if (floor < ev.floor && floor > ev.destination) {
+							result_elevator = ev;
+						}					
+					}
+				}else if (ev.occupied === false){
+					result_elevator = ev;
+				}					
+			}
+
+				
+
+		}
+
+		return result_elevator;
 	}
 
 	window.CTL = CTL;
