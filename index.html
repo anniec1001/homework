@@ -9,7 +9,7 @@
 		CTL.maxFloor = 10;
 
 		var ev1 = new CTL.elevator();
-		console.log('here is the new elevator properties:',ev1);
+		console.log('here is the new elevator default properties:',ev1);
 
 		//adding more elevators
 		var ev2 = new CTL.elevator();
@@ -26,11 +26,14 @@
 		ev4.floor = 2;
 		ev4.occupied = false;
 
-		var gotElevator = CTL.floorRequested(5);
-		console.log('sending elevator',gotElevator);
+		var firstEv = CTL.floorRequested(2);
+		firstEv = CTL.goToFloor(firstEv,6);
+		console.log('checking updated first result', firstEv);
 
-		gotElevator = CTL.updateElevator(gotElevator);
-		console.log('checking updated result', gotElevator);
+		//test a second person on a different floor
+		var secondEv = CTL.floorRequested(3);
+		secondEv = CTL.goToFloor(secondEv,7);
+		console.log('checking updated second result', secondEv);
 	</script>
 	</body>
 </html>

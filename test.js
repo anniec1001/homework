@@ -92,7 +92,7 @@
 		return false;		
 	}
 
-	CTL.updateElevator = function(ev){
+	function updateElevator(ev){
 		for(var i = 0; i < total_elevators.length; i++){
 			if(ev.id == total_elevators[i].key){
 				total_elevators[i].value = ev;
@@ -101,7 +101,15 @@
 			}
 		}		
 	}
-	
+
+	CTL.goToFloor = function(ev, newFloor){
+		ev.destination = newFloor;
+		ev.occupied = true;
+		ev.trips += 1;
+		ev.floor_passed += Math.abs(ev.floor - ev.destination);  //get absolute value and track floors passed
+		return updateElevator(ev);
+	}
+
 	window.CTL = CTL;
 
 }(window, document));
